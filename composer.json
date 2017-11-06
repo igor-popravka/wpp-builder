@@ -1,0 +1,23 @@
+{
+  "name": "wdip/wpp-builder",
+  "version": "0.0.1",
+  "type": "lib",
+  "description": "",
+  "time": "2017-11-06",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Igor Popravka",
+      "email": "ipopravka@hotmail.com"
+    }
+  ],
+  "require": {
+    "php": " >= 5.4",
+    "austinhyde/iniparser": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "WDIP\\WPPBuilder\\": "src/"
+    }
+  }
+}
