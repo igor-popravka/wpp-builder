@@ -7,21 +7,21 @@ namespace WDIP\WPPBuilder\Interfaces;
  * Time: 11:12
  */
 interface PluginInterface {
-    public function build($plugin_path = "", $plugin_config = "");
+    public function build($plugin = "", $config = "");
 
-    public function getPluginFolder();
+    public function getFolder();
 
-    public function getPluginFile();
+    public function getPath();
 
-    public function addAdminMenu(CallbackInterface $callback);
+    public function initAdminMenu(CallbackInterface $callback);
 
-    public function addAdminSettings(CallbackInterface $callback);
+    public function initAdminSettings(CallbackInterface $callback);
 
-    public function addAdminEnqueueScripts(CallbackInterface $callback);
+    public function initAdminEnqueueScripts(CallbackInterface $callback);
 
-    public function addAjax($action, CallbackInterface $callback, $nopriv = true);
+    public function initEnqueueScripts(CallbackInterface $callback);
 
-    public function addEnqueueScripts(CallbackInterface $callback);
+    public function addAjaxAction($action, CallbackInterface $callback, $nopriv = true);
 
     public function addShortCode($code, CallbackInterface $callback);
 
@@ -29,10 +29,11 @@ interface PluginInterface {
 
     public function addOptionsPage(OptionsPageInterface $page);
 
-    public function addJScript(ScriptInterface $script);
+    public function addJS(ScriptInterface $script);
 
-    public function addStyle(StyleInterface $style);
+    public function addCSS(StyleInterface $style);
 
     public function getVersion();
 
+    public function getConfig();
 }

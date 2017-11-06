@@ -6,5 +6,6 @@ namespace WDIP\WPPBuilder\Interfaces;
  * Date: 06.11.2017
  * Time: 14:17
  */
-interface CallbackInterface extends CreatorInterface {
+interface CallbackInterface extends CreatorInterface{
+    public function __construct(PluginInterface $plugin, $method);
 }
