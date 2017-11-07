@@ -17,7 +17,7 @@ class Config implements ConfigInterface {
 
     private $parsed_data = [];
 
-    public function getProvider() {
+    public function provider() {
         if (!isset(self::$provider)) {
             self::$provider = new \IniParser();
         }
@@ -25,7 +25,7 @@ class Config implements ConfigInterface {
     }
 
     public function parse($file) {
-        $this->parsed_data = $this->getProvider()->parse($file);
+        $this->parsed_data = $this->provider()->parse($file);
     }
 
     function __get($name) {

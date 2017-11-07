@@ -6,5 +6,5 @@ namespace WDIP\WPPBuilder\Interfaces;
  * Date: 06.11.2017
  * Time: 15:05
  */
-interface StyleInterface extends CreatorInterface{
+interface StyleInterface{
 }

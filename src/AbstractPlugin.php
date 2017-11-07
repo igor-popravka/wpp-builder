@@ -2,14 +2,18 @@
 namespace WDIP\WPPBuilder;
 
 use WDIP\WPPBuilder\Interfaces\CallbackInterface;
+use WDIP\WPPBuilder\Interfaces\ContextInterface;
 use WDIP\WPPBuilder\Interfaces\PluginInterface;
+use WDIP\WPPBuilder\Interfaces\ScriptInterface;
+use WDIP\WPPBuilder\Interfaces\SettingsInterface;
+use WDIP\WPPBuilder\Interfaces\StyleInterface;
 
 /**
  * @author: igor.popravka
  * Date: 06.11.2017
  * Time: 11:09
  */
-abstract class AbstractPlugin implements PluginInterface {
+abstract class AbstractPlugin implements PluginInterface, ContextInterface {
     /** @var string $path */
     private $path = "";
 
@@ -18,6 +22,12 @@ abstract class AbstractPlugin implements PluginInterface {
 
     /** @var Config $config */
     private $config;
+
+    private $settings = [];
+
+    private $scripts = [];
+
+    private $styles = [];
 
     private static $instance;
 
@@ -88,30 +98,76 @@ abstract class AbstractPlugin implements PluginInterface {
 
     public function initAdminMenu(CallbackInterface $callback) {
         add_action('admin_menu', $callback->create());
+        return $this;
     }
 
     public function initAdminSettings(CallbackInterface $callback) {
         add_action('admin_init', $callback->create());
+        return $this;
     }
 
     public function initAdminEnqueueScripts(CallbackInterface $callback) {
         add_action('admin_enqueue_scripts', $callback->create());
+        return $this;
     }
 
     public function initEnqueueScripts(CallbackInterface $callback) {
         add_action('wp_enqueue_scripts', $callback->create());
+        return $this;
     }
 
     public function addAjaxAction($action, CallbackInterface $callback, $nopriv = true) {
         $nopriv = $nopriv ? '_nopriv' : '';
         add_action("wp_ajax{$nopriv}_{$action}", $callback->create());
+        return $this;
     }
 
     public function addShortCode($code, CallbackInterface $callback) {
         add_shortcode($code, $callback->create());
+        return $this;
     }
 
-    public function registerDeactivation(CallbackInterface $callback){
+    public function registerDeactivation(CallbackInterface $callback) {
         register_deactivation_hook($this->getPath(), $callback->create());
+        return $this;
+    }
+
+    public function addSetting(SettingsInterface $setting) {
+        array_push($this->settings, $setting);
+        return $this;
+    }
+
+    public function registerSettings() {
+        foreach ($this->settings as $setting) {
+            /** @var Settings $setting */
+            $setting->save();
+        }
+        return $this;
+    }
+
+    public function addScript(ScriptInterface $script) {
+        array_push($this->scripts, $script);
+        return $this;
+    }
+
+    public function registerScripts() {
+        foreach ($this->scripts as $script) {
+            /** @var Script $script */
+            $script->setPage($this->getPath())->save();
+        }
+        return $this;
+    }
+
+    public function addStyle(StyleInterface $style) {
+        array_push($this->styles, $style);
+        return $this;
+    }
+
+    public function registerStyles() {
+        foreach ($this->styles as $style) {
+            /** @var Style $style */
+            $style->setPage($this->getPath())->save();
+        }
+        return $this;
     }
 }

@@ -7,7 +7,7 @@ namespace WDIP\WPPBuilder\Interfaces;
  * Time: 13:54
  */
 interface ConfigInterface {
-    public function getProvider();
+    public function provider();
 
     public function parse($file);
 }

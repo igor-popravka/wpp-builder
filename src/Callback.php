@@ -9,19 +9,23 @@
 namespace WDIP\WPPBuilder;
 
 
+use WDIP\WPPBuilder\Interfaces\ActionInterface;
 use WDIP\WPPBuilder\Interfaces\CallbackInterface;
-use WDIP\WPPBuilder\Interfaces\PluginInterface;
+use WDIP\WPPBuilder\Interfaces\ContextInterface;
 
-class Callback implements CallbackInterface {
-    private $plugin;
+class Callback implements CallbackInterface, ActionInterface, ContextInterface {
+    private $context;
     private $method;
-    
-    public function __construct(PluginInterface $plugin, $method) {
-        $this->plugin = $plugin;
+
+    public function __construct(ContextInterface $context, $method) {
+        $this->context = $context;
         $this->method = $method;
     }
 
     public function create() {
-        return [$this->plugin, $this->method];
+        return [$this->context, $this->method];
+    }
+    
+    public function save() {
     }
 }

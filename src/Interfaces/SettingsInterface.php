@@ -7,7 +7,7 @@ namespace WDIP\WPPBuilder\Interfaces;
  * Time: 15:50
  */
 interface SettingsInterface {
-    public function __construct($group, $name, $page);
-    public function validate();
-    public function createSection($id, $title, CallbackInterface $callback);
+    public function addSection($id, $title, CallbackInterface $notify = null);
+
+    public function validator(CallbackInterface $validator);
 }

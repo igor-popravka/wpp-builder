@@ -27,11 +27,17 @@ interface PluginInterface {
 
     public function registerDeactivation(CallbackInterface $callback);
 
-    public function addOptionsPage(OptionsPageInterface $page);
+    public function addSetting(SettingsInterface $setting);
 
-    public function addJS(ScriptInterface $script);
+    public function registerSettings();
 
-    public function addCSS(StyleInterface $style);
+    public function addScript(ScriptInterface $script);
+
+    public function registerScripts();
+
+    public function addStyle(StyleInterface $style);
+    
+    public function registerStyles();
 
     public function getVersion();
 
